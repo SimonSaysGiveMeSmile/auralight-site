@@ -1,0 +1,297 @@
+/* ============================================================================
+   AuraLight — site styles.  "Night Cabin": deep dark, cinematic, automotive.
+   A single accent custom property drifts through the app's real palette so the
+   whole page slowly changes color — the site demonstrates the product.
+   ========================================================================= */
+
+/* Animatable accent: @property lets the browser interpolate the color smoothly.
+   Everything accent-tinted references var(--accent), so they shift in unison. */
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ff3b4e;
+}
+
+:root {
+  --ink:        #07070b;
+  --ink-2:      #0c0c12;
+  --panel:      rgba(255, 255, 255, 0.035);
+  --panel-line: rgba(255, 255, 255, 0.09);
+  --text:       #edecf2;
+  --muted:      #9896a6;
+  --faint:      #63616f;
+  --accent:     #ff3b4e;
+
+  --display: "Bricolage Grotesque", ui-serif, Georgia, serif;
+  --body:    "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --mono:    "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --edge: clamp(1.25rem, 5vw, 6rem);
+  --maxw: 1200px;
+}
+
+/* Global slow color drift through the AuraLight palette. */
+@keyframes accent-drift {
+  0%   { --accent: #ff3b4e; }  /* tail-light red   */
+  18%  { --accent: #ff8a3d; }  /* amber            */
+  36%  { --accent: #2fe6c6; }  /* aurora teal      */
+  54%  { --accent: #3da5ff; }  /* azure            */
+  72%  { --accent: #8a6bff; }  /* violet           */
+  88%  { --accent: #ff5cc8; }  /* magenta          */
+  100% { --accent: #ff3b4e; }
+}
+:root { animation: accent-drift 44s linear infinite; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--body);
+  background: var(--ink);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Atmospheric base: two soft colored glows bleeding from the top corners,
+   like ambient light in a dark cabin. Tinted by the drifting accent. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60% 45% at 15% -5%, color-mix(in oklab, var(--accent) 26%, transparent), transparent 70%),
+    radial-gradient(55% 40% at 100% 0%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 65%),
+    linear-gradient(180deg, var(--ink-2), var(--ink) 40%);
+  transition: background 1.2s linear;
+}
+
+/* Fine film grain over everything for cinematic texture. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Type ---------------------------------------------------------------- */
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; }
+a { color: inherit; text-decoration: none; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color 1.2s linear;
+}
+.idx {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}
+
+/* ---- Layout helpers ------------------------------------------------------ */
+.wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--edge); }
+.accent { color: var(--accent); transition: color 1.2s linear; }
+
+/* ---- Nav ----------------------------------------------------------------- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--edge);
+  backdrop-filter: blur(14px) saturate(1.4);
+  background: color-mix(in oklab, var(--ink) 62%, transparent);
+  border-bottom: 1px solid var(--panel-line);
+}
+.brand { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; }
+.brand .dot {
+  width: 0.62rem; height: 0.62rem; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px 2px var(--accent), 0 0 26px 6px color-mix(in oklab, var(--accent) 55%, transparent);
+  transition: background 1.2s linear, box-shadow 1.2s linear;
+  animation: pulse 3.6s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.82); opacity: 0.7; } }
+.nav-links { display: flex; align-items: center; gap: clamp(0.5rem, 2vw, 1.8rem); }
+.nav-links a { color: var(--muted); font-size: 0.92rem; transition: color 0.25s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links .cta { color: var(--text); }
+
+/* ---- Buttons ------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-family: var(--body); font-weight: 600; font-size: 0.95rem;
+  padding: 0.72rem 1.25rem; border-radius: 999px;
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+.btn-primary {
+  color: #0a0a0e; background: var(--accent);
+  box-shadow: 0 0 0 0 transparent, 0 10px 40px -10px color-mix(in oklab, var(--accent) 80%, transparent);
+  transition: transform 0.2s, box-shadow 0.3s, background 1.2s linear;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 46px -8px color-mix(in oklab, var(--accent) 90%, transparent); }
+.btn-ghost { color: var(--text); border-color: var(--panel-line); background: var(--panel); }
+.btn-ghost:hover { border-color: color-mix(in oklab, var(--accent) 60%, var(--panel-line)); transform: translateY(-2px); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.4rem 0.8rem; border-radius: 999px;
+  border: 1px solid var(--panel-line); background: var(--panel);
+}
+.chip .live { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); transition: background 1.2s linear; }
+
+/* ---- Hero ---------------------------------------------------------------- */
+.hero { position: relative; padding-top: clamp(3rem, 8vw, 7rem); padding-bottom: clamp(3rem, 7vw, 6rem); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.hero h1 { font-size: clamp(2.8rem, 7vw, 5.4rem); margin: 1.2rem 0 0; }
+.hero h1 em { font-style: normal; color: var(--accent); transition: color 1.2s linear; }
+.hero .lede { color: var(--muted); font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem); max-width: 34ch; margin-top: 1.4rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2rem; align-items: center; }
+.hero-note { font-family: var(--mono); font-size: 0.74rem; color: var(--faint); margin-top: 1.1rem; letter-spacing: 0.04em; }
+
+/* Phone frame with a glow that breathes behind it. */
+.phone-stage { position: relative; display: grid; place-items: center; }
+.phone-stage::before {
+  content: ""; position: absolute; inset: -8% -12%;
+  background: radial-gradient(50% 50% at 50% 45%, color-mix(in oklab, var(--accent) 55%, transparent), transparent 70%);
+  filter: blur(30px); z-index: 0;
+  animation: breathe 7s ease-in-out infinite;
+  transition: background 1.2s linear;
+}
+@keyframes breathe { 0%,100% { opacity: 0.55; transform: scale(0.95); } 50% { opacity: 0.9; transform: scale(1.05); } }
+.phone {
+  position: relative; z-index: 1;
+  width: min(280px, 74vw); aspect-ratio: 660 / 1433;
+  border-radius: 2.4rem; padding: 0.5rem;
+  background: linear-gradient(160deg, #23232c, #0b0b10);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 2rem; display: block; }
+.phone .notch { position: absolute; top: 0.5rem; left: 50%; transform: translateX(-50%); width: 32%; height: 1.4rem; background: #060608; border-radius: 0 0 1rem 1rem; z-index: 2; }
+
+/* ---- Spectrum strip (an LED strip across the page) ----------------------- */
+.spectrum { height: 4px; width: 100%; border: none; margin: 0;
+  background: linear-gradient(90deg, #ff3b4e, #ff8a3d, #ffd24a, #2fe6c6, #3da5ff, #8a6bff, #ff5cc8, #ff3b4e);
+  background-size: 200% 100%;
+  animation: slide 18s linear infinite;
+  box-shadow: 0 0 24px 1px color-mix(in oklab, var(--accent) 60%, transparent);
+  transition: box-shadow 1.2s linear;
+}
+@keyframes slide { to { background-position: 200% 0; } }
+
+/* ---- Section scaffolding ------------------------------------------------- */
+.section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
+.section-head { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+.section-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-top: 0.8rem; }
+.section-head p { color: var(--muted); margin-top: 1rem; font-size: 1.1rem; }
+
+/* ---- Feature rows -------------------------------------------------------- */
+.feature { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.feature + .feature { margin-top: clamp(3rem, 7vw, 6rem); }
+.feature.flip { grid-template-columns: 1.2fr 0.8fr; }
+.feature.flip .feature-media { order: -1; }
+.feature h3 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin: 0.7rem 0 0; }
+.feature p { color: var(--muted); margin-top: 1rem; max-width: 42ch; }
+.feature ul { list-style: none; margin-top: 1.2rem; display: grid; gap: 0.6rem; }
+.feature li { position: relative; padding-left: 1.4rem; color: var(--text); font-size: 0.98rem; }
+.feature li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); transition: background 1.2s linear; }
+
+.feature-media { position: relative; display: grid; place-items: center; }
+.feature-media .phone { width: min(240px, 66vw); }
+.feature-media::before {
+  content: ""; position: absolute; inset: 6% 14%;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--accent) 42%, transparent), transparent 72%);
+  filter: blur(34px); transition: background 1.2s linear;
+}
+
+/* Swatch row + waveform mini-visuals (CSS only) */
+.swatches { display: flex; gap: 0.5rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.swatches span { width: 2.2rem; height: 2.2rem; border-radius: 0.7rem; border: 1px solid rgba(255,255,255,0.1); }
+
+/* ---- Privacy highlight --------------------------------------------------- */
+.privacy-hero {
+  position: relative; text-align: center;
+  border: 1px solid var(--panel-line); border-radius: 2rem;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(70% 120% at 50% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 70%),
+    var(--panel);
+  overflow: hidden;
+}
+.privacy-hero h2 { font-size: clamp(2rem, 5vw, 3.6rem); }
+.privacy-hero p { color: var(--muted); max-width: 52ch; margin: 1.2rem auto 0; }
+.badge-nc {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 1.4rem;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  padding: 0.5rem 1rem; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--panel-line));
+  transition: color 1.2s linear, border-color 1.2s linear;
+}
+.pill-row { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; margin-top: 2rem; }
+.pill { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); border: 1px solid var(--panel-line); border-radius: 999px; padding: 0.5rem 1rem; }
+
+/* ---- Footer -------------------------------------------------------------- */
+.footer { border-top: 1px solid var(--panel-line); padding: clamp(2.5rem, 5vw, 4rem) 0; margin-top: 3rem; }
+.footer-grid { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: start; }
+.footer a { color: var(--muted); transition: color 0.25s; }
+.footer a:hover { color: var(--text); }
+.footer .cols { display: flex; gap: clamp(2rem, 6vw, 5rem); flex-wrap: wrap; }
+.footer .col { display: grid; gap: 0.55rem; font-size: 0.92rem; }
+.footer .col strong { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
+.footer .fine { color: var(--faint); font-size: 0.82rem; max-width: 34ch; margin-top: 1rem; }
+
+/* ============================================================================
+   Document pages (privacy / support)
+   ========================================================================= */
+.doc { max-width: 74ch; margin-inline: auto; padding-block: clamp(2.5rem, 6vw, 5rem); }
+.doc .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); transition: color 1.2s linear; }
+.doc h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 1rem 0 0.4rem; }
+.doc .updated { font-family: var(--mono); font-size: 0.82rem; color: var(--faint); margin-bottom: 2.5rem; }
+.doc h2 { font-size: 1.4rem; margin: 2.6rem 0 0.8rem; padding-top: 1.6rem; border-top: 1px solid var(--panel-line); }
+.doc h3 { font-size: 1.1rem; margin: 1.6rem 0 0.5rem; }
+.doc p, .doc li { color: #cbcad4; }
+.doc p { margin: 0.8rem 0; }
+.doc ul, .doc ol { margin: 0.8rem 0 0.8rem 1.2rem; display: grid; gap: 0.6rem; }
+.doc strong { color: var(--text); }
+.doc a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color 1.2s linear; }
+.doc .lead { font-size: 1.15rem; color: var(--text); border-left: 2px solid var(--accent); padding-left: 1.2rem; transition: border-color 1.2s linear; }
+.back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem; }
+.back:hover { color: var(--text); }
+
+/* ---- Reveal-on-load stagger ---------------------------------------------- */
+.reveal { opacity: 0; transform: translateY(18px); animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; } .d3 { animation-delay: 0.25s; }
+.d4 { animation-delay: 0.35s; } .d5 { animation-delay: 0.45s; } .d6 { animation-delay: 0.55s; }
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .phone-stage { order: -1; }
+  .feature, .feature.flip { grid-template-columns: 1fr; }
+  .feature.flip .feature-media, .feature-media { order: -1; }
+  .nav-links .hide-sm { display: none; }
+}
+
+/* ---- Motion sensitivity: freeze the ambient life, keep it usable --------- */
+@media (prefers-reduced-motion: reduce) {
+  :root { animation: none; }
+  *, *::before, *::after { animation: none !important; scroll-behavior: auto; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Source for the 1200x630 social-share card. Render with headless Chrome at
+     that window size → og.jpg. Self-contained (inline styles) so it renders
+     deterministically, independent of styles.css. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:630px; overflow:hidden; }
+  .card {
+    width:1200px; height:630px; position:relative;
+    background:
+      radial-gradient(46% 70% at 12% 0%, rgba(255,59,78,0.30), transparent 66%),
+      radial-gradient(40% 60% at 100% 8%, rgba(138,107,255,0.20), transparent 62%),
+      linear-gradient(160deg,#0c0c12,#07070b 55%);
+    font-family:"Hanken Grotesk",sans-serif; color:#edecf2; overflow:hidden;
+  }
+  .pad { position:absolute; inset:74px 80px; display:flex; flex-direction:column; }
+  .brand { display:flex; align-items:center; gap:16px; font-family:"Bricolage Grotesque"; font-weight:700; font-size:40px; letter-spacing:-0.01em; }
+  .dot { width:20px; height:20px; border-radius:50%; background:#ff3b4e; box-shadow:0 0 22px 4px #ff3b4e, 0 0 46px 10px rgba(255,59,78,0.5); }
+  h1 { font-family:"Bricolage Grotesque"; font-weight:800; font-size:88px; line-height:0.98; letter-spacing:-0.025em; margin-top:auto; max-width:15ch; }
+  h1 em { font-style:normal; color:#ff6a54; }
+  .sub { color:#9896a6; font-size:28px; margin-top:26px; }
+  .label { position:absolute; right:80px; bottom:82px; font-family:"IBM Plex Mono"; font-weight:500; font-size:20px; letter-spacing:0.16em; text-transform:uppercase; color:#63616f; }
+  .strip { position:absolute; left:0; right:0; bottom:0; height:8px;
+    background:linear-gradient(90deg,#ff3b4e,#ff8a3d,#ffd24a,#2fe6c6,#3da5ff,#8a6bff,#ff5cc8);
+    box-shadow:0 0 26px 2px rgba(255,59,78,0.5); }
+  .phone { position:absolute; right:-40px; top:96px; width:300px; height:520px; border-radius:44px; padding:9px;
+    background:linear-gradient(160deg,#23232c,#0b0b10); border:1px solid rgba(255,255,255,0.14);
+    box-shadow:0 40px 90px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.14); transform:rotate(6deg); }
+  .phone img { width:100%; height:100%; object-fit:cover; border-radius:36px; display:block; }
+  .glow { position:absolute; right:-10px; top:120px; width:420px; height:480px; border-radius:50%;
+    background:radial-gradient(50% 50% at 50% 50%, rgba(255,59,78,0.45), transparent 70%); filter:blur(30px); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="glow"></div>
+    <div class="phone"><img src="shot-instrument.jpg" alt="" /></div>
+    <div class="pad">
+      <div class="brand"><span class="dot"></span>AuraLight</div>
+      <h1>Ambient LED control<br>for your <em>car.</em></h1>
+      <div class="sub">Smooth dimming · effects · music-reactive light · private by design</div>
+    </div>
+    <div class="label">iPhone · iPad</div>
+    <div class="strip"></div>
+  </div>
+</body>
+</html>
