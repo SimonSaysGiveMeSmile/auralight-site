@@ -44,7 +44,8 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* Keep the animated phone glow from widening the mobile visual viewport. */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
 
 body {
   font-family: var(--body);
@@ -197,7 +198,7 @@ a { color: inherit; text-decoration: none; }
 @keyframes slide { to { background-position: 200% 0; } }
 
 /* ---- Section scaffolding ------------------------------------------------- */
-.section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
+.section { padding-block: clamp(3.5rem, 8vw, 7rem); }
 .section-head { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
 .section-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-top: 0.8rem; }
 .section-head p { color: var(--muted); margin-top: 1rem; font-size: 1.1rem; }

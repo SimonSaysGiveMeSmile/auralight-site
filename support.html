@@ -40,11 +40,20 @@
     <span class="kicker">Support</span>
     <h1>Support</h1>
 
-    <p class="lead">AuraLight controls Bluetooth (ELK-BLEDOM-family) LED lighting controllers in your car — colors, brightness, animated effects, and music-reactive lighting.</p>
+    <p class="lead">Personalize compatible Bluetooth LED strips with colors, brightness, saved scenes, animated effects and music-reactive lighting. Designed with car interiors in mind, with controls for iPhone and iPad.</p>
+
+    <h2 id="compatibility">Controller compatibility</h2>
+    <p>Compatibility depends on the controller attached to your strips, its model and its firmware. A brand name or Bluetooth support alone is not enough to establish compatibility.</p>
+    <ul>
+      <li><strong>ELK/MELK</strong>, including some ELK-BLEDOM controllers: a supported Bluetooth protocol family, commonly used in car and room lighting.</li>
+      <li><strong>Triones and SP110E</strong>: separate protocol adapters are included; available effects and brightness behavior depend on the controller.</li>
+      <li><strong>Govee BLE</strong>: basic power, RGB color and brightness for compatible controllers using the supported Bluetooth protocol. This is not support for all Govee products or proprietary scenes.</li>
+    </ul>
+    <p>These are implemented protocol adapters, not a guarantee that every model has been tested on physical hardware. AuraLight does not support every LED strip, Wi-Fi-only controllers, infrared-only remotes or unsupported Bluetooth protocols. Separate strip or zone control requires hardware that supports it.</p>
 
     <h2>Getting started</h2>
     <ol>
-      <li>Power your LED controller and make sure it isn't connected in another app.</li>
+      <li>If using the app in a car, park before setup. Power your LED controller and make sure it isn't connected in another app.</li>
       <li>Open AuraLight — it scans automatically. Tap your controller in the list to connect.</li>
       <li>Confirm your strip count when prompted (this keeps brightness within a safe range).</li>
       <li>Use the tabs: <strong>Static</strong> (solid colors), <strong>Animated</strong> (effects), <strong>Music</strong> (react to audio), <strong>Setup</strong> (connection, layout, preferences).</li>
@@ -59,12 +68,12 @@
     <h3>Making the lights react to music</h3>
     <p>Two ways, on the <strong>Music</strong> tab:</p>
     <ul>
-      <li><strong>Play a track (best, zero-lag).</strong> Tap <strong>Play a track</strong>, pick an audio file, and AuraLight plays it and drives the lights straight from its sound — perfectly in time, no microphone needed. The file stays on your device.</li>
+      <li><strong>Play a track.</strong> Tap <strong>Play a track</strong>, choose an audio file, and AuraLight plays it while driving the lights from its sound. No microphone is needed, and the file stays on your device. Response timing depends on your Bluetooth controller.</li>
       <li><strong>Microphone.</strong> The Sound Wave / Beat Breathe / Style Sync effects <em>listen</em> to the cabin audio, so the music must be audibly playing near the phone. Grant microphone access when prompted (Settings → AuraLight). The microphone path has a little more lag than playing a track in-app.</li>
     </ul>
 
     <h3>Control with Siri (hands-free)</h3>
-    <p>Ask Siri things like <em>“set AuraLight to red,”</em> <em>“set AuraLight to Night”</em> (a saved scene, by name), <em>“start Fireplace on AuraLight”</em> (an effect or ambient scene), <em>“turn AuraLight on,”</em> or <em>“set AuraLight brightness.”</em> Your lights change without touching the phone. (Siri and the Shortcuts app both work; connect to your controller first so the change reaches the strip.)</p>
+    <p>Ask Siri things like <em>“set AuraLight to red,”</em> <em>“set AuraLight to Night”</em> (a saved scene, by name), <em>“start Fireplace on AuraLight,”</em> or <em>“turn AuraLight on.”</em> Connect to a compatible controller first so the change reaches the strip. You may need to open AuraLight to establish the connection; fully backgrounded operation has not been verified on every device.</p>
 
     <h3>Warp Drive (experimental)</h3>
     <p>This driving-dynamics effect is off by default; enable it in <strong>Setup</strong>. It's intended for passenger use.</p>
