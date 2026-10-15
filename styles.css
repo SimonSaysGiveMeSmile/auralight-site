@@ -186,6 +186,15 @@ a { color: inherit; text-decoration: none; }
 }
 .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 2rem; display: block; }
 .phone .notch { position: absolute; top: 0.5rem; left: 50%; transform: translateX(-50%); width: 32%; height: 1.4rem; background: #060608; border-radius: 0 0 1rem 1rem; z-index: 2; }
+.tablet {
+  position: relative; z-index: 1;
+  width: min(420px, 100%);
+  padding: 0.5rem; border-radius: 1.5rem;
+  background: linear-gradient(160deg, #23232c, #0b0b10);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9);
+}
+.tablet img { width: 100%; height: auto; display: block; border-radius: 1rem; }
 
 /* ---- Spectrum strip (an LED strip across the page) ----------------------- */
 .spectrum { height: 4px; width: 100%; border: none; margin: 0;
